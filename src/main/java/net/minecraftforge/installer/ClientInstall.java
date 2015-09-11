@@ -41,13 +41,13 @@ public class ClientInstall implements ActionType {
     {
         if (!target.exists())
         {
-            JOptionPane.showMessageDialog(null, "There is no minecraft installation at this location!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "В этой папке нет файлов Minecraft!", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         File launcherProfiles = new File(target,"launcher_profiles.json");
         if (!launcherProfiles.exists())
         {
-            JOptionPane.showMessageDialog(null, "There is no minecraft launcher profile at this location, you need to run the launcher first!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "В этой папке нет профиля лаунчера, снаначала нужно запустить лаунчер!", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -57,7 +57,7 @@ public class ClientInstall implements ActionType {
         {
             if (!versionTarget.delete())
             {
-                JOptionPane.showMessageDialog(null, "There was a problem with the launcher version data. You will need to clear "+versionTarget.getAbsolutePath()+" manually", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Найдена ошибка с данными версии лаунчера. Нужно удалить "+versionTarget.getAbsolutePath()+" вручную", "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
             else
             {
@@ -81,24 +81,24 @@ public class ClientInstall implements ActionType {
             try
             {
                 boolean delete = false;
-                monitor.setNote("Considering minecraft client jar");
+                monitor.setNote("Проверка jar-файла клиента Minecraft");
                 monitor.setProgress(1);
 
                 if (!minecraftJarFile.exists())
                 {
                     minecraftJarFile = File.createTempFile("minecraft_client", ".jar");
                     delete = true;
-                    monitor.setNote(String.format("Downloading minecraft client version %s", VersionInfo.getMinecraftVersion()));
+                    monitor.setNote(String.format("Скачивание клиента Minecraft %s", VersionInfo.getMinecraftVersion()));
                     String clientUrl = String.format(DownloadUtils.VERSION_URL_CLIENT.replace("{MCVER}", VersionInfo.getMinecraftVersion()));
                     System.out.println("  Temp File: " + minecraftJarFile.getAbsolutePath());
 
                     if (!DownloadUtils.downloadFileEtag("minecraft server", minecraftJarFile, clientUrl))
                     {
                         minecraftJarFile.delete();
-                        JOptionPane.showMessageDialog(null, "Downloading minecraft failed, invalid e-tag checksum.\n" +
-                                "Try again, or use the official launcher to run Minecraft " +
-                                VersionInfo.getMinecraftVersion() + " first.",
-                                "Error downloading", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Скачивание клиента неудачно, неправильная контрольная сумма e-tag.\n" +
+                                "Попробуйте ещё раз или используйте официальный лаунчер для запуска Minecraft " +
+                                VersionInfo.getMinecraftVersion() + ".",
+                                "Ошибка при загрузке", JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                     monitor.setProgress(2);
@@ -106,13 +106,13 @@ public class ClientInstall implements ActionType {
 
                 if (VersionInfo.getStripMetaInf())
                 {
-                    monitor.setNote("Copying and filtering minecraft client jar");
+                    monitor.setNote("Копирование и обработка jar-файла клиента");
                     copyAndStrip(minecraftJarFile, clientJarFile);
                     monitor.setProgress(3);
                 }
                 else
                 {
-                    monitor.setNote("Copying minecraft client jar");
+                    monitor.setNote("Копирование jar-файла клиента");
                     Files.copy(minecraftJarFile, clientJarFile);
                     monitor.setProgress(3);
                 }
@@ -124,7 +124,7 @@ public class ClientInstall implements ActionType {
             }
             catch (IOException e1)
             {
-                JOptionPane.showMessageDialog(null, "You need to run the version "+VersionInfo.getMinecraftVersion()+" manually at least once", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Нужно запустить версию "+VersionInfo.getMinecraftVersion()+" вручную хотя бы раз", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -138,7 +138,7 @@ public class ClientInstall implements ActionType {
         if (bad.size() > 0)
         {
             String list = Joiner.on("\n").join(bad);
-            JOptionPane.showMessageDialog(null, "These libraries failed to download. Try again.\n"+list, "Error downloading", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Эти библиотеки не удалось скачать. Попробуйте ещё раз.\n"+list, "Ошибка при загрузке", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -146,7 +146,7 @@ public class ClientInstall implements ActionType {
         {
             if (!targetLibraryFile.getParentFile().delete())
             {
-                JOptionPane.showMessageDialog(null, "There was a problem with the launcher version data. You will need to clear "+targetLibraryFile.getAbsolutePath()+" manually", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Найдена ошибка с данными версии лаунчера. Нужно удалить "+targetLibraryFile.getAbsolutePath()+" вручную", "Ошибка", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             else
@@ -166,7 +166,7 @@ public class ClientInstall implements ActionType {
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "There was a problem writing the launcher version data,  is it write protected?", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Произошла проблема при сохранении данных лаунчера, папка защищена от записи?", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -176,7 +176,7 @@ public class ClientInstall implements ActionType {
         }
         catch (IOException e)
         {
-            JOptionPane.showMessageDialog(null, "There was a problem writing the system library file", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Произошла проблема при записи файла системной библиотеки", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -189,7 +189,7 @@ public class ClientInstall implements ActionType {
         }
         catch (InvalidSyntaxException e)
         {
-            JOptionPane.showMessageDialog(null, "The launcher profile file is corrupted. Re-run the minecraft launcher to fix it!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Файл профиля лаунчера повреждён. Запустите лаунчер, чтобы исправить это!", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         catch (Exception e)
@@ -229,7 +229,7 @@ public class ClientInstall implements ActionType {
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "There was a problem writing the launch profile,  is it write protected?", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Произошла проблема при сохранении профиля для запуска, папка защищена от записи?", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -302,11 +302,11 @@ public class ClientInstall implements ActionType {
     {
         if (targetDir.exists())
         {
-            return "The directory is missing a launcher profile. Please run the minecraft launcher first";
+            return "В папке отсутствует профиль лаунчера. Сначала запустите лаунчер Minecraft";
         }
         else
         {
-            return "There is no minecraft directory set up. Either choose an alternative, or run the minecraft launcher to create one";
+            return "Отсутствует папка Minecraft. Выберите другую либо запустите лаунчер, чтобы создать её";
         }
     }
 
@@ -315,14 +315,14 @@ public class ClientInstall implements ActionType {
     {
         if (grabbed.size() > 0)
         {
-            return String.format("Successfully installed client profile %s for version %s into launcher and grabbed %d required libraries", VersionInfo.getProfileName(), VersionInfo.getVersion(), grabbed.size());
+            return String.format("Профиль %s для версии %s успешно установлен (загружено необходимых библиотек - %s)", VersionInfo.getProfileName(), VersionInfo.getVersion(), grabbed.size());
         }
-        return String.format("Successfully installed client profile %s for version %s into launcher", VersionInfo.getProfileName(), VersionInfo.getVersion());
+        return String.format("Профиль %s для версии %s успешно установлен в лаунчер", VersionInfo.getProfileName(), VersionInfo.getVersion());
     }
 
     @Override
     public String getSponsorMessage()
     {
-        return MirrorData.INSTANCE.hasMirrors() ? String.format("<html><a href=\'%s\'>Data kindly mirrored by %s</a></html>", MirrorData.INSTANCE.getSponsorURL(),MirrorData.INSTANCE.getSponsorName()) : null;
+        return MirrorData.INSTANCE.hasMirrors() ? String.format("<html><a href=\'%s\'>Данные любезно предоставлены %s</a></html>", MirrorData.INSTANCE.getSponsorURL(),MirrorData.INSTANCE.getSponsorName()) : null;
     }
 }

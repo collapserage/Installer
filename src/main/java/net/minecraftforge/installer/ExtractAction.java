@@ -19,7 +19,7 @@ public class ExtractAction implements ActionType {
         catch (IOException e)
         {
             if (!headless)
-                JOptionPane.showMessageDialog(null, "An error occurred extracting file", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Произошла ошибка при распаковке файла", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -34,13 +34,13 @@ public class ExtractAction implements ActionType {
     @Override
     public String getFileError(File targetDir)
     {
-        return !targetDir.exists() ? "Target directory does not exist" : !targetDir.isDirectory() ? "Target is not a directory" : "";
+        return !targetDir.exists() ? "Указанная папка не существует" : !targetDir.isDirectory() ? "Указанный путь не является папкой" : "";
     }
 
     @Override
     public String getSuccessMessage()
     {
-        return "Extracted successfully";
+        return "Распаковка успешна";
     }
 
     @Override

@@ -59,7 +59,7 @@ public class DownloadUtils {
             }
             if (library.isBooleanValue(jsonMarker) && library.getBooleanValue(jsonMarker))
             {
-                monitor.setNote(String.format("Considering library %s", artifact.getDescriptor()));
+                monitor.setNote(String.format("Проверка библиотеки %s", artifact.getDescriptor()));
                 File libPath = artifact.getLocalPath(librariesDir);
                 String libURL = LIBRARIES_URL;
                 if (MirrorData.INSTANCE.hasMirrors() && library.isStringValue("url"))
@@ -77,7 +77,7 @@ public class DownloadUtils {
                 }
 
                 libPath.getParentFile().mkdirs();
-                monitor.setNote(String.format("Downloading library %s", artifact.getDescriptor()));
+                monitor.setNote(String.format("Скачивание библиотеки %s", artifact.getDescriptor()));
                 libURL += artifact.getPath();
 
                 File packFile = new File(libPath.getParentFile(), libPath.getName() + PACK_NAME);
@@ -85,7 +85,7 @@ public class DownloadUtils {
                 {
                     if (library.isStringValue("url"))
                     {
-                        monitor.setNote(String.format("Trying unpacked library %s", artifact.getDescriptor()));
+                        monitor.setNote(String.format("Проверка распакованной библиотеки %s", artifact.getDescriptor()));
                     }
                     if (!downloadFile(artifact.getDescriptor(), libPath, libURL, checksums))
                     {
@@ -95,7 +95,7 @@ public class DownloadUtils {
                         }
                         else
                         {
-                            monitor.setNote("Unmrriored file failed, Mojang launcher should download at next run, non fatal");
+                            monitor.setNote("Библиотека не прошла проверку, лаунчер должен перекачать её при следующем запуске");
                         }
                     }
                     else
@@ -107,9 +107,9 @@ public class DownloadUtils {
                 {
                     try
                     {
-                        monitor.setNote(String.format("Unpacking packed file %s", packFile.getName()));
+                        monitor.setNote(String.format("Распаковка архива %s", packFile.getName()));
                         unpackLibrary(libPath, Files.toByteArray(packFile));
-                        monitor.setNote(String.format("Successfully unpacked packed file %s",packFile.getName()));
+                        monitor.setNote(String.format("Архив %s успешно распакован",packFile.getName()));
                         packFile.delete();
 
                         if (checksumValid(libPath, checksums))
@@ -136,7 +136,7 @@ public class DownloadUtils {
             }
             else
             {
-                monitor.setNote(String.format("Considering library %s: Not Downloading", artifact.getDescriptor()));
+                monitor.setNote(String.format("Проверка библиотеки %s: не скачивать", artifact.getDescriptor()));
             }
             monitor.setProgress(progress++);
         }
@@ -466,7 +466,8 @@ public class DownloadUtils {
             return new IMonitor() {
                 private ProgressMonitor monitor;
                 {
-                    monitor = new ProgressMonitor(null, "Downloading libraries", "Libraries are being analyzed", 0, 1);
+                    javax.swing.UIManager.put("ProgressMonitor.progressText", "Прогресс");
+                    monitor = new ProgressMonitor(null, "Скачивание библиотек", "Библиотеки анализируются", 0, 1);
                     monitor.setMillisToPopup(0);
                     monitor.setMillisToDecideToPopup(0);
                 }

@@ -22,7 +22,7 @@ public class ServerInstall implements ActionType {
         if (target.exists() && !target.isDirectory())
         {
             if (!headless)
-                JOptionPane.showMessageDialog(null, "There is a file at this location, the server cannot be installed here!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Эта папка не пуста, сервер не может быть установлен здесь!", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -48,17 +48,17 @@ public class ServerInstall implements ActionType {
         File mcServerFile = new File(target,"minecraft_server."+VersionInfo.getMinecraftVersion()+".jar");
         if (!mcServerFile.exists())
         {
-            monitor.setNote("Considering minecraft server jar");
+            monitor.setNote("Проверка jar-файла сервера");
             monitor.setProgress(1);
-            monitor.setNote(String.format("Downloading minecraft server version %s",VersionInfo.getMinecraftVersion()));
+            monitor.setNote(String.format("Скачивание сервера Minecraft %s",VersionInfo.getMinecraftVersion()));
             if (!DownloadUtils.downloadFileEtag("minecraft server", mcServerFile, mcServerURL))
             {
                 mcServerFile.delete();
                 if (!headless)
                 {
-                    JOptionPane.showMessageDialog(null, "Downloading minecraft server failed, invalid e-tag checksum.\n"+
-                                                        "Try again, or manually place server jar to skip download.",
-                                                        "Error downloading", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Скачивание сервера неудачно, неправильная контрольная сумма e-tag.\n"+
+                                                        "Попробуйте ещё раз или разместите jar-файл сервера вручную",
+                                                        "Ошибка при скачивании", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
@@ -76,7 +76,7 @@ public class ServerInstall implements ActionType {
         {
             String list = Joiner.on("\n").join(bad);
             if (!headless)
-                JOptionPane.showMessageDialog(null, "These libraries failed to download. Try again.\n"+list, "Error downloading", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Эти библиотеки не удалось скачать. Попробуйте ещё раз\n"+list, "Ошибка при скачивании", JOptionPane.ERROR_MESSAGE);
             else
                 System.err.println("These libraries failed to download, try again. \n"+list);
             return false;
@@ -89,7 +89,7 @@ public class ServerInstall implements ActionType {
         catch (IOException e)
         {
             if (!headless)
-                JOptionPane.showMessageDialog(null, "An error occurred installing the library", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Произошла ошибка при установке библиотеки", "Ошибка", JOptionPane.ERROR_MESSAGE);
             else
                 System.err.println("An error occurred installing the distributable");
             return false;
@@ -109,15 +109,15 @@ public class ServerInstall implements ActionType {
     {
         if (!targetDir.exists())
         {
-            return "The specified directory does not exist<br/>It will be created";
+            return "Указанная папка не существует<br/>Она будет создана";
         }
         else if (!targetDir.isDirectory())
         {
-            return "The specified path needs to be a directory";
+            return "Указанный путь должен являться папкой";
         }
         else
         {
-            return "There are already files at the target directory";
+            return "В указанной папке уже есть файлы";
         }
     }
 
@@ -126,14 +126,14 @@ public class ServerInstall implements ActionType {
     {
         if (grabbed.size() > 0)
         {
-            return String.format("Successfully downloaded minecraft server, downloaded %d libraries and installed %s", grabbed.size(), VersionInfo.getProfileName());
+            return String.format("Сервер Minecraft успешно скачан (скачано библиотек - %d) и установлен %s", grabbed.size(), VersionInfo.getProfileName());
         }
-        return String.format("Successfully downloaded minecraft server and installed %s", VersionInfo.getProfileName());
+        return String.format("Сервер Minecraft успешно скачан и установлен %s", VersionInfo.getProfileName());
     }
 
     @Override
     public String getSponsorMessage()
     {
-        return MirrorData.INSTANCE.hasMirrors() ? String.format(headless ? "Data kindly mirrored by %2$s at %1$s" : "<html><a href=\'%s\'>Data kindly mirrored by %s</a></html>", MirrorData.INSTANCE.getSponsorURL(),MirrorData.INSTANCE.getSponsorName()) : null;
+        return MirrorData.INSTANCE.hasMirrors() ? String.format(headless ? "Данные любезно предоставлены %2$s в %1$s" : "<html><a href=\'%s\'>Данные любезно предоставлены %s</a></html>", MirrorData.INSTANCE.getSponsorURL(),MirrorData.INSTANCE.getSponsorName()) : null;
     }
 }

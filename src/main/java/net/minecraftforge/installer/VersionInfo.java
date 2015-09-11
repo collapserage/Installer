@@ -69,7 +69,7 @@ public class VersionInfo {
 
     public static String getWelcomeMessage()
     {
-        return INSTANCE.versionData.getStringValue("install","welcome");
+        return "Вас приветствует установщик Forge";
     }
 
     public static String getLogoFileName()

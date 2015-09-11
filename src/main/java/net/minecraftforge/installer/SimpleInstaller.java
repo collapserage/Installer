@@ -127,7 +127,7 @@ public class SimpleInstaller {
         String path = VersionInfo.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         if (path.contains("!/"))
         {
-            JOptionPane.showMessageDialog(null, "Due to java limitation, please do not run this jar in a folder ending with ! : \n"+ path, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Из-за ограничения java не запускайте этот файл в папке, заканчивающейся на ! : \n"+ path, "Ошибка", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -138,7 +138,7 @@ public class SimpleInstaller {
         catch (Throwable e)
         {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Corrupt download detected, cannot install", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Файл повреждён, невозможно установить", "Ошибка", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

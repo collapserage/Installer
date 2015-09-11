@@ -6,9 +6,9 @@ import javax.swing.Icon;
 import com.google.common.base.Throwables;
 
 public enum InstallerAction {
-    CLIENT("Install client", "Install a new profile to the Mojang client launcher", ClientInstall.class),
-    SERVER("Install server", "Create a new modded server installation", ServerInstall.class),
-    EXTRACT("Extract", "Extract the contained jar file", ExtractAction.class);
+    CLIENT("Установить клиент", "Установить новый профиль в лаунчер клиента", ClientInstall.class),
+    SERVER("Установить сервер", "Создать новый сервер с Forge", ServerInstall.class),
+    EXTRACT("Распаковать", "Распаковать содержащийся jar-файл", ExtractAction.class);
 
     private String label;
     private String tooltip;

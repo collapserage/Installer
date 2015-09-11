@@ -48,6 +48,59 @@ public class InstallerPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            javax.swing.UIManager.put("FileChooser.acceptAllFileFilterText", "Все файлы");
+            javax.swing.UIManager.put("FileChooser.cancelButtonText", "Отмена");
+            javax.swing.UIManager.put("FileChooser.cancelButtonToolTipText", "Отмена");
+            javax.swing.UIManager.put("FileChooser.deleteFileButtonText", "Удалить");
+            javax.swing.UIManager.put("FileChooser.deleteFileButtonToolTipText", "Удалить файл");
+            javax.swing.UIManager.put("FileChooser.detailsViewButtonAccessibleName", "Подробно");
+            javax.swing.UIManager.put("FileChooser.detailsViewButtonToolTipText", "Подробно");
+            javax.swing.UIManager.put("FileChooser.directoryDescriptionText", "Папка");
+            javax.swing.UIManager.put("FileChooser.directoryOpenButtonText", "Открыть");
+            javax.swing.UIManager.put("FileChooser.directoryOpenButtonToolTipText", "Открыть");
+            javax.swing.UIManager.put("FileChooser.enterFilenameLabelText", "Имя");
+            javax.swing.UIManager.put("FileChooser.fileDescriptionText", "Описание");
+            javax.swing.UIManager.put("FileChooser.fileNameLabelText", "Имя файла");
+            javax.swing.UIManager.put("FileChooser.filesLabelText", "Файлы");
+            javax.swing.UIManager.put("FileChooser.filesOfTypeLabelText", "Типы файлов");
+            javax.swing.UIManager.put("FileChooser.filterLabelText", "Тип(ы) файла");
+            javax.swing.UIManager.put("FileChooser.foldersLabelText", "Папка");
+            javax.swing.UIManager.put("FileChooser.helpButtonText", "Помощь");
+            javax.swing.UIManager.put("FileChooser.helpButtonToolTipText", "Помощь");
+            javax.swing.UIManager.put("FileChooser.homeFolderAccessibleName", "Дом");
+            javax.swing.UIManager.put("FileChooser.homeFolderToolTipText", "Дом");
+            javax.swing.UIManager.put("FileChooser.listViewButtonAccessibleName", "Список");
+            javax.swing.UIManager.put("FileChooser.listViewButtonToolTipText", "Список");
+            javax.swing.UIManager.put("FileChooser.lookInLabelText", "Католог:");
+            javax.swing.UIManager.put("FileChooser.newFolderAccessibleName", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.newFolderButtonText", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.newFolderButtonToolTipText", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.newFolderDialogText", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.newFolderErrorSeparator", "Ошибка создания");
+            javax.swing.UIManager.put("FileChooser.newFolderErrorText", "Ошибка создания");
+            javax.swing.UIManager.put("FileChooser.newFolderToolTipText", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.openButtonText", "Открыть");
+            javax.swing.UIManager.put("FileChooser.openButtonToolTipText", "Открыть");
+            javax.swing.UIManager.put("FileChooser.openDialogTitleText", "Открыть");
+            javax.swing.UIManager.put("FileChooser.other.newFolder", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.other.newFolder.subsequent", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.win32.newFolder", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.win32.newFolder.subsequent", "Создать папку");
+            javax.swing.UIManager.put("FileChooser.pathLabelText", "Путь");
+            javax.swing.UIManager.put("FileChooser.renameFileButtonText", "Переименовать");
+            javax.swing.UIManager.put("FileChooser.renameFileButtonToolTipText", "Переименовать");
+            javax.swing.UIManager.put("FileChooser.renameFileDialogText", "Переименовать");
+            javax.swing.UIManager.put("FileChooser.renameFileErrorText", "Ошибка переименования");
+            javax.swing.UIManager.put("FileChooser.renameFileErrorTitle", "Ошибка переименования");
+            javax.swing.UIManager.put("FileChooser.saveButtonText", "Сохранить");
+            javax.swing.UIManager.put("FileChooser.saveButtonToolTipText", "Сохранить");
+            javax.swing.UIManager.put("FileChooser.saveDialogTitleText", "Сохранить");
+            javax.swing.UIManager.put("FileChooser.saveInLabelText", "Католог:");
+            javax.swing.UIManager.put("FileChooser.updateButtonText", "Обновить");
+            javax.swing.UIManager.put("FileChooser.updateButtonToolTipText", "Обновить");
+            javax.swing.UIManager.put("FileChooser.upFolderAccessibleName", "Вверх");
+            javax.swing.UIManager.put("FileChooser.upFolderToolTipText", "Вверх");
+
             JFileChooser dirChooser = new JFileChooser();
             dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             dirChooser.setFileHidingEnabled(false);
@@ -145,7 +198,7 @@ public class InstallerPanel extends JPanel {
                 }
                 catch (Exception ex)
                 {
-                    JOptionPane.showMessageDialog(InstallerPanel.this, "An error occurred launching the browser", "Error launching browser", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(InstallerPanel.this, "Произошла ошибка при запуске браузера", "Ошибка при запуске браузера", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -186,14 +239,14 @@ public class InstallerPanel extends JPanel {
         this.targetDir = targetDir;
         selectedDirText = new JTextField();
         selectedDirText.setEditable(false);
-        selectedDirText.setToolTipText("Path to minecraft");
+        selectedDirText.setToolTipText("Путь к установленному Minecraft");
         selectedDirText.setColumns(30);
 //        homeDir.setMaximumSize(homeDir.getPreferredSize());
         entryPanel.add(selectedDirText);
         JButton dirSelect = new JButton();
         dirSelect.setAction(new FileSelectAction());
         dirSelect.setText("...");
-        dirSelect.setToolTipText("Select an alternative minecraft directory");
+        dirSelect.setToolTipText("Выберите другую папку с установленным Minecraft");
         entryPanel.add(dirSelect);
 
         entryPanel.setAlignmentX(LEFT_ALIGNMENT);
@@ -274,13 +327,16 @@ public class InstallerPanel extends JPanel {
 
     public void run()
     {
+        javax.swing.UIManager.put("OptionPane.okButtonText", "OK");
+        javax.swing.UIManager.put("OptionPane.cancelButtonText", "Отмена");
+        java.util.Locale.setDefault(new java.util.Locale("ru"));
         JOptionPane optionPane = new JOptionPane(this, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
 
-        Frame emptyFrame = new Frame("Mod system installer");
+        Frame emptyFrame = new Frame("Установщик Forge");
         emptyFrame.setUndecorated(true);
         emptyFrame.setVisible(true);
         emptyFrame.setLocationRelativeTo(null);
-        dialog = optionPane.createDialog(emptyFrame, "Mod system installer");
+        dialog = optionPane.createDialog(emptyFrame, "Установщик Forge");
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
         int result = (Integer) (optionPane.getValue() != null ? optionPane.getValue() : -1);
@@ -289,7 +345,7 @@ public class InstallerPanel extends JPanel {
             InstallerAction action = InstallerAction.valueOf(choiceButtonGroup.getSelection().getActionCommand());
             if (action.run(targetDir))
             {
-                JOptionPane.showMessageDialog(null, action.getSuccessMessage(), "Complete", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, action.getSuccessMessage(), "Готово", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         dialog.dispose();
